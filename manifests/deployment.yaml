@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: my-back
+spec:
+    replicas: 4
+    selector:
+       matchLabels:
+          app: health-app
+    template:
+       metadata:
+          labels:
+             app: health-app
+       spec:
+          containers:
+          - name: health
+            image: xqdes/otus_msa:amd64
+            ports:
+              - name: web
+                containerPort: 8000
+

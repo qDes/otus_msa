@@ -1,18 +1,26 @@
-# HW1
-simple app with one http handler <br>
+# HW2
+simple app with one http handler in k8s <br>
+
+
+## minikube macOS arm hacks
 ```
-GET /health/
-RESPONSE: {"status": "OK"}
+minikube start
+
+minikube addons enable ingress
+
+minikube tunnel
 ```
 
-## build
+## apply manifests
+
 ```
-docker build -t health .
+cd manifests
+kubectl apply -f .
 ```
 
-## run 
-```
-docker run -p 8000:8000 health
-```
+also add arch.homework to /etc/hosts for better experience
 
-check result on http://127.0.0.1:8000/health
+## check deployment
+```
+curl http://arch.homework/otusapp/andrei/health 
+```
