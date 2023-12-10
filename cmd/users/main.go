@@ -6,34 +6,25 @@ import (
 	"github.com/golang-migrate/migrate/v4"
 	"github.com/golang-migrate/migrate/v4/database/postgres"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
+	"os"
 	"otus_msa_docker/internal/http"
 	"otus_msa_docker/internal/users"
 )
 
-/*
-func health(w http.ResponseWriter, req *http.Request) {
-	resp := struct {
-		Status string `json:"status"`
-	}{
-		Status: "OK",
-	}
-
-	w.Header().Set("Content-Type", "application/json")
-	jsonResp, err := json.Marshal(resp)
-	if err != nil {
-		log.Fatalf("Error happened in JSON marshal. Err: %s", err)
-	}
-	w.Write(jsonResp)
-}
-
-	http.HandleFunc("/health", health)
-	http.ListenAndServe(":8000", nil)
-
-*/
-
 func main() {
+
+	dbHost := os.Getenv("postgresqlHost")
+	dbPort := os.Getenv("postgresqlPort")
+	dbUser := os.Getenv("postgresqlUsername")
+	dbPassword := os.Getenv("postgresqlPassword")
+	dbName := os.Getenv("postgresqlDatabase")
+
+	// Construct the connection string
+	connStr := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable",
+		dbUser, dbPassword, dbHost, dbPort, dbName)
+
 	// Setup database connection
-	db, err := sql.Open("postgres", "postgres://user:pass@localhost:5444/postgres?sslmode=disable")
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		panic(err)
 	}

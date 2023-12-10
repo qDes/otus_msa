@@ -1,6 +1,6 @@
-# HW2
-simple app with one http handler in k8s <br>
+# HW3
 
+simple CRUD application with database
 
 ## minikube macOS arm hacks
 ```
@@ -11,16 +11,20 @@ minikube addons enable ingress
 minikube tunnel
 ```
 
-## apply manifests
-
+## install app 
 ```
-cd manifests
-kubectl apply -f .
+helm install  hw3 ./hw3
 ```
 
-also add arch.homework to /etc/hosts for better experience
+## test collection results
+running hw3.postman_collection.json results
 
-## check deployment
-```
-curl http://arch.homework/otusapp/andrei/health 
-```
+![img.png](results/img.png)
+
+![img_1.png](results/img_1.png)
+
+![img_2.png](results/img_2.png)
+
+![img_3.png](results/img_3.png)
+
+![img_4.png](results/img_4.png)

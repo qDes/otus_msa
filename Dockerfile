@@ -11,8 +11,11 @@ WORKDIR /build
 ADD go.mod .
 RUN go mod download
 COPY . .
-RUN go build -ldflags="-s -w" -o /app/main main.go
 
+RUN go build -ldflags="-s -w" -o /app/main cmd/users/main.go
+
+RUN mkdir -p /app/migrations
+COPY migrations /app/migrations
 
 FROM scratch
 
@@ -20,5 +23,6 @@ COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certifi
 
 WORKDIR /app
 COPY --from=builder /app/main /app/main
+COPY --from=builder /app/migrations ./migrations
 
 CMD ["./main"]

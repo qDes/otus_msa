@@ -29,7 +29,7 @@ func RunServer(s api.ServerInterface) {
 	r.Mount("/", h)
 	r.HandleFunc("/health", health)
 
-	http.ListenAndServe(":3000", r)
+	http.ListenAndServe(":8000", r)
 }
 
 func (s *userServer) CreateUser(w http.ResponseWriter, r *http.Request) {
